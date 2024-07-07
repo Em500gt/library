@@ -1,23 +1,34 @@
-class BookControllers{
-    getBooks(req, res){
+const bookServices = require('../services/bookServices');
 
+class BookControllers {
+    async getBooks(req, res) {
+        await bookServices.getAllBook()
+            .then((data) => res.send(data))
+            .catch((err) => res.send(err.message));
     }
 
-    addBook(req, res){
-
+    async addBook(req, res) {
+        await bookServices.addBook(req.body)
+            .then(() => res.send('Успешно'))
+            .catch((err) => res.send(err.message));
     }
 
-    getBook(req, res){
-
+    async getBook(req, res) {
+        await bookServices.getOneBook(req.params.id)
+            .then((data) => res.send(data))
+            .catch((err) => res.send(err.message));
     }
 
-    updateBook(req, res){
-
+    async updateBook(req, res) {
+        await bookServices.updateBook({ id: req.params.id, body: req.body })
+            .then(() => res.send('Информация о книге обновлена'))
+            .catch((err) => res.send(err.message));
     }
 
-    deleteBook(req, res){
-
-        
+    async deleteBook(req, res) {
+        await bookServices.deleteBook(req.params.id)
+            .then(() => res.send('Книга удалена'))
+            .catch((err) => res.send(err.message));
     }
 }
 

@@ -1,24 +1,24 @@
 const { User } = require('../models/models');
 class UserServices {
 
-    getAllUsers() {
-
+    async getAllUsers() {
+        return await User.findAll();
     }
 
-    createUser() {
-
+    async createUser(body) {
+        await User.create(body);
     }
 
-    getOneUser() {
-
+    async getOneUser(id) {
+        return await User.findByPk(id);
     }
 
-    updateUser() {
-
+    async updateUser(data) {
+        await User.update(data.body, { where: { id: data.id } });
     }
 
-    deleteUser() {
-
+    async deleteUser(id) {
+        await User.destroy({ where: { id } });
     }
 
 }

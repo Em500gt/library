@@ -1,10 +1,12 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, INTEGER } = require('sequelize');
 const sequelize = require('../config/db');
 
 const Book = sequelize.define('Book', {
-    author: {
+
+    id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        primaryKey: true,
+        autoIncrement: true
     },
 
     name: {
@@ -12,15 +14,27 @@ const Book = sequelize.define('Book', {
         allowNull: false
     },
 
-    YearPublishing: {
-        type: DataTypes.DATE,
+    author: {
+        type: DataTypes.STRING,
         allowNull: false
     },
 
-    count: {
+    year: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+
+    numberOfPage: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+
+    user: {
         type: DataTypes.INTEGER,
         allowNull: false
     }
+}, {
+    timestamps: false
 })
 
 module.exports = Book;

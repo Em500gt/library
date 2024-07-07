@@ -1,25 +1,45 @@
 const { Book } = require('../models/models');
+const { User } = require('../models/models')
 
-class BookServices{
-    getAllBook(){
+class BookServices {
+  async getAllBook() {
+    const res = await Book.findAll({
+      attributes: ['id', 'name', 'author', 'year', 'numberOfPage'],
+      // include: [
+      //   {
+      //     model: User,
+      //     attributes: ['name', 'email', 'Registered']
+      //   }
+      // ],
+    });
 
-    }
+    return res
+  }
 
-    addBook(){
+  async addBook(body) {
+    await Book.create(body)
+  }
 
-    }
+  async getOneBook(id) {
+    return await Book.findOne({
+      where: { id },
+      attributes: ['id', 'name', 'author', 'year', 'numberOfPage'],
+      // include: [
+      //   {
+      //     model: User,
+      //     attributes: ['name', 'email', 'Registered']
+      //   }
+      // ],
+    })
+  }
 
-    getOneBook(){
+  async updateBook(data) {
+    await Book.update(data.body, { where: { id: data.id } })
+  }
 
-    }
-
-    updateBook(){
-
-    }
-
-    deleteBook(){
-
-    }
+  async deleteBook(id) {
+    await Book.destroy({ where: { id } });
+  }
 }
 
 module.exports = new BookServices();
