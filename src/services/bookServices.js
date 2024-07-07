@@ -1,16 +1,9 @@
 const { Book } = require('../models/models');
-const { User } = require('../models/models')
 
 class BookServices {
   async getAllBook() {
     const res = await Book.findAll({
-      attributes: ['id', 'name', 'author', 'year', 'numberOfPage'],
-      // include: [
-      //   {
-      //     model: User,
-      //     attributes: ['name', 'email', 'Registered']
-      //   }
-      // ],
+      attributes: ['id', 'name', 'author', 'year', 'numberOfPage']
     });
 
     return res
@@ -23,22 +16,17 @@ class BookServices {
   async getOneBook(id) {
     return await Book.findOne({
       where: { id },
-      attributes: ['id', 'name', 'author', 'year', 'numberOfPage'],
-      // include: [
-      //   {
-      //     model: User,
-      //     attributes: ['name', 'email', 'Registered']
-      //   }
-      // ],
+      attributes: ['id', 'name', 'author', 'year', 'numberOfPage']
     })
   }
 
   async updateBook(data) {
-    await Book.update(data.body, { where: { id: data.id } })
+    const [rowsAffected] = await Book.update(data.body, { where: { id: data.id } });
+    return rowsAffected;
   }
 
   async deleteBook(id) {
-    await Book.destroy({ where: { id } });
+    return await Book.destroy({ where: { id } });
   }
 }
 

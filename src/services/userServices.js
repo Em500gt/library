@@ -1,4 +1,5 @@
 const { User } = require('../models/models');
+
 class UserServices {
 
     async getAllUsers() {
@@ -14,11 +15,13 @@ class UserServices {
     }
 
     async updateUser(data) {
-        await User.update(data.body, { where: { id: data.id } });
+        const [rowsAffected] = await User.update(data.body, { where: { id: data.id } });
+        return rowsAffected;
+
     }
 
     async deleteUser(id) {
-        await User.destroy({ where: { id } });
+        return await User.destroy({ where: { id } });
     }
 
 }

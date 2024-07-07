@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const bookControllers = require('../controllers/bookControllers');
+const validate = require('../helpers/validation');
 
 router.route('/')
     .get(bookControllers.getBooks)
-    .post(bookControllers.addBook);
+    .post(validate.validBook(), bookControllers.addBook);
 
 router.route('/:id')
-    .get(bookControllers.getBook)
-    .patch(bookControllers.updateBook)
-    .delete(bookControllers.deleteBook);
+    .get(validate.validId(), bookControllers.getBook)
+    .patch(validate.validId(), validate.validBookUpdate(), bookControllers.updateBook)
+    .delete(validate.validId(), bookControllers.deleteBook);
 
 module.exports = router;

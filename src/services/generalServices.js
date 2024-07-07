@@ -8,7 +8,7 @@ class GeneralServices {
         return { user, book }
     }
 
-    async pageData({ page, limit }) {
+    async pageData({ page = 1, limit = 10 }) {
         if (page == undefined || limit == undefined) {
             return await Book.findAll({
                 include: [{ model: User }]
@@ -42,16 +42,16 @@ class GeneralServices {
         } else if (name) {
             whereClause = {
                 name: { [Op.like]: `%${name}%` }
-            };
+            }
         } else if (author) {
             whereClause = {
                 author: { [Op.like]: `%${author}%` }
-            };
+            }
         }
 
         return await Book.findAll({
             where: whereClause
-        });
+        })
     }
 }
 
