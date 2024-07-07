@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 class UserControllers {
   async getUsers(req, res) {
     await userServices.getAllUsers()
-      .then((data) => res.status(302).send(data))
+      .then((data) => res.status(200).send(data))
       .catch((err) => res.status(400).send(err.message))
   };
 
@@ -32,7 +32,7 @@ class UserControllers {
       if (!result) {
         return res.status(404).json({ message: 'Пользователь не найден' });
       }
-      res.status(302).send(result);
+      res.status(200).send(result);
     }
     catch (error) {
       res.status(500).json({ message: error.message });
@@ -50,7 +50,7 @@ class UserControllers {
       if (result === 0) {
         return res.status(404).json({ message: 'Пользователь не найден' });
       }
-      res.status(202).json({ message: 'Пользователь обновлен успешно' })
+      res.status(200).json({ message: 'Пользователь обновлен успешно' })
     }
     catch (error) {
       res.status(500).json({ message: error.message });
@@ -67,7 +67,7 @@ class UserControllers {
       if (result === 0) {
         return res.status(404).json({ message: 'Пользователь не найден' });
       }
-      res.status(202).json({ message: 'Пользователь удален успешно' })
+      res.status(200).json({ message: 'Пользователь удален успешно' })
     }
     catch (error) {
       res.status(500).json({ message: error.message });

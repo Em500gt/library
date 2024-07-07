@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 class BookControllers {
     async getBooks(req, res) {
         await bookServices.getAllBook()
-            .then((data) => res.status(302).send(data))
+            .then((data) => res.status(200).send(data))
             .catch((err) => res.status(400).send(err.message));
     }
 
@@ -32,7 +32,7 @@ class BookControllers {
             if (!result) {
                 return res.status(404).json({ message: 'Книга не найдена' });
             }
-            res.status(302).send(result);
+            res.status(200).send(result);
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -46,11 +46,10 @@ class BookControllers {
                 return res.status(400).json({ errors: errors.array() });
             }
             const result = await bookServices.updateBook({ id: req.params.id, body: req.body });
-            console.log(result);
             if (result === 0) {
                 return res.status(404).json({ message: 'Книга не найдена' });
             }
-            res.status(202).json({ message: 'Информация о книге обновлена' })
+            res.status(200).json({ message: 'Информация о книге обновлена' })
         }
         catch (error) {
             res.status(500).json({ message: error.message });
@@ -67,7 +66,7 @@ class BookControllers {
             if (result === 0) {
                 return res.status(404).json({ message: 'Книга не найдена' });
             }
-            res.status(202).json({ message: 'Книга удалена успешно' })
+            res.status(200).json({ message: 'Книга удалена успешно' })
         }
         catch (error) {
             res.status(500).json({ message: error.message });

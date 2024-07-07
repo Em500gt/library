@@ -36,24 +36,24 @@ class ValidateData {
         return [
             validate.body('name')
                 .exists().withMessage('Поле "name" обязательно для заполнения')
-                .isAlpha().withMessage('Название должно состоять только из букв')
-                .not().matches(/^\s*$/).withMessage('Название не может состоять только из пробелов')
-                .isLength({ max: 100 }).withMessage('Название не должно превышать 100 символов')
+                .isString().withMessage('Поле "name" должно быть строкой')
+                .not().matches(/^\s*$/).withMessage('Поле "name" не может состоять только из пробелов')
+                .isLength({ max: 100 }).withMessage('Поле "name" не должно превышать 100 символов')
                 .trim(),
             validate.body('author')
                 .exists().withMessage('Поле "author" обязательно для заполнения')
-                .isAlpha().withMessage('Имя должно состоять только из букв')
-                .matches(/^[a-zA-Z\s]+$/).withMessage('Имя должно содержать только буквы и пробелы')
+                .isString().withMessage('Поле "author" должно быть строкой')
+                .matches(/^[a-zA-Z\s]+$/).withMessage('Поле "author" должно содержать только буквы и пробелы')
                 .trim(),
             validate.body('year')
                 .exists().withMessage('Поле "year" обязательно для заполнения')
-                .isInt({ min: 1000, max: 2100 }).withMessage('Год должен быть между 1000 и 2100'),
+                .isInt({ min: 1000, max: 2100 }).withMessage('Поле "year" должен быть между 1000 и 2100'),
             validate.body('numberOfPage')
                 .exists().withMessage('Поле "numberOfPage" обязательно для заполнения')
-                .isInt({ min: 1 }).withMessage('Количество страниц должно быть больше 0'),
+                .isInt({ min: 1 }).withMessage('Поле "numberOfPage" должно быть больше 0'),
             validate.body('user')
                 .exists().withMessage('Поле "user" обязательно для заполнения')
-                .isInt({ min: 1 }).withMessage('Нумерация должна быть с 1'),
+                .isInt({ min: 1 }).withMessage('Поле "user" должно быть с 1'),
         ];
     }
 
@@ -61,27 +61,25 @@ class ValidateData {
         return [
             validate.body('name')
                 .optional({ nullable: true })
-                .isAlpha().withMessage('Название должно состоять только из букв')
-                .not().matches(/^\s*$/).withMessage('Название не может состоять только из пробелов')
-                .isLength({ max: 100 }).withMessage('Название не должно превышать 100 символов')
+                .isString().withMessage('Поле "name" должно быть строкой')
+                .not().matches(/^\s*$/).withMessage('Поле "name" не может состоять только из пробелов')
+                .isLength({ max: 100 }).withMessage('Поле "name" не должно превышать 100 символов')
                 .trim(),
             validate.body('author')
                 .optional({ nullable: true })
-                .isAlpha().withMessage('Имя должно состоять только из букв')
-                .matches(/^[a-zA-Z\s]+$/).withMessage('Имя должно содержать только буквы и пробелы')
+                .isString().withMessage('Поле "author" должно быть строкой')
+                .matches(/^[a-zA-Z\s]+$/).withMessage('Поле "author" должно содержать только буквы и пробелы')
                 .trim(),
             validate.body('year')
                 .optional({ nullable: true })
-                .isInt({ min: 1000, max: 2100 }).withMessage('Год должен быть между 1000 и 2100'),
+                .isInt({ min: 1000, max: 2100 }).withMessage('Поле "year" должен быть между 1000 и 2100'),
             validate.body('numberOfPage')
                 .optional({ nullable: true })
-                .isInt({ min: 1 }).withMessage('Количество страниц должно быть больше 0'),
+                .isInt({ min: 1 }).withMessage('Поле "numberOfPage" должно быть больше 0'),
             validate.body('user')
                 .optional({ nullable: true })
-                .exists().withMessage('Поле "user" обязательно для заполнения')
-                .isInt({ min: 1 }).withMessage('Нумерация должна быть с 1'),
+                .isInt({ min: 1 }).withMessage('Поле "user" должно быть с 1'),
         ];
-
     }
 
     validPageAndLimit() {
@@ -101,11 +99,11 @@ class ValidateData {
         return [
             validate.check('author')
                 .optional()
-                .isAlpha().withMessage('Имя должно состоять только из букв')
+                .isString().withMessage('Поле "author" должно быть строкой')
                 .trim(),
             validate.check('name')
                 .optional()
-                .isAlpha().withMessage('Имя должно состоять только из букв')
+                .isString().withMessage('Поле "name" должно быть строкой')
                 .trim()
         ]
     }
