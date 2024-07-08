@@ -18,6 +18,14 @@ const BookUser = sequelize.define('BookUser', {
             key: 'id'
         }
     }
-});
+},
+    {
+        indexes: [
+            {
+                unique: true,
+                fields: ['BookId', 'UserId']
+            }
+        ]
+    });
 
 module.exports = BookUser;

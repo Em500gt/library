@@ -29,7 +29,13 @@ const Book = sequelize.define('Book', {
         allowNull: false
     },
 }, {
-    timestamps: false
+    timestamps: false,
+    indexes: [
+        {
+            unique: true,
+            fields: ['id']
+        }
+    ]
 })
 
 module.exports = Book;

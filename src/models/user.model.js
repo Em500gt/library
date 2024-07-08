@@ -25,7 +25,13 @@ const User = sequelize.define('User', {
 },
     {
         updatedAt: false,
-        createdAt: 'Registered'
+        createdAt: 'Registered',
+        indexes: [
+            {
+                unique: true,
+                fields: ['id']
+            }
+        ]
     })
 
 module.exports = User;
