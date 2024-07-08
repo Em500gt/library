@@ -32,6 +32,19 @@ class ValidateData {
         ];
     }
 
+    validUserIdBookId() {
+        return [
+            validate.param('bookId')
+                .notEmpty().withMessage('ID обязателен для заполнения')
+                .isInt().withMessage('ID должен быть целым числом')
+                .toInt(),
+            validate.param('userId')
+                .notEmpty().withMessage('ID обязателен для заполнения')
+                .isInt().withMessage('ID должен быть целым числом')
+                .toInt()
+        ]
+    }
+
     validBook() {
         return [
             validate.body('name')
@@ -51,9 +64,6 @@ class ValidateData {
             validate.body('numberOfPage')
                 .exists().withMessage('Поле "numberOfPage" обязательно для заполнения')
                 .isInt({ min: 1 }).withMessage('Поле "numberOfPage" должно быть больше 0'),
-            validate.body('user')
-                .exists().withMessage('Поле "user" обязательно для заполнения')
-                .isInt({ min: 1 }).withMessage('Поле "user" должно быть с 1'),
         ];
     }
 
@@ -76,9 +86,6 @@ class ValidateData {
             validate.body('numberOfPage')
                 .optional({ nullable: true })
                 .isInt({ min: 1 }).withMessage('Поле "numberOfPage" должно быть больше 0'),
-            validate.body('user')
-                .optional({ nullable: true })
-                .isInt({ min: 1 }).withMessage('Поле "user" должно быть с 1'),
         ];
     }
 

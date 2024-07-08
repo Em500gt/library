@@ -72,6 +72,20 @@ class BookControllers {
             res.status(500).json({ message: error.message });
         }
     }
+
+    async search(req, res) {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            const result = await bookServices.search(req.query);
+            res.status(200).send(result);
+        }
+        catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    }
 }
 
 module.exports = new BookControllers();

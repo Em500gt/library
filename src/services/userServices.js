@@ -23,7 +23,6 @@ class UserServices {
     async deleteUser(id) {
         return await User.destroy({ where: { id } });
     }
-
 }
 
 module.exports = new UserServices()

@@ -1,5 +1,5 @@
-const { User, Book } = require('../models/models');
-const { Op } = require('sequelize');
+const { User, Book, BookUser } = require('../models/models');
+const sequelize = require('../config/db');
 
 class GeneralServices {
     async quantityAll() {
@@ -9,17 +9,13 @@ class GeneralServices {
     }
 
     async pageData({ page = 1, limit = 10 }) {
-        if (page == undefined || limit == undefined) {
-            return await Book.findAll({
-                include: [{ model: User }]
-            })
-        }
-
         const offset = (page - 1) * limit;
         const { rows } = await Book.findAndCountAll({
             include: [
                 {
                     model: User,
+                    attributes: ['id', 'name', 'email', 'Registered'],
+                    through: { attributes: [] }
                 }
             ],
             limit: limit,
@@ -29,29 +25,50 @@ class GeneralServices {
         return rows
     }
 
-    async search({ author, name }) {
-        let whereClause = {};
+    async addBU(bookId, userId) {
+        await sequelize.transaction(async (t) => {
+            const book = await Book.findByPk(bookId, { transaction: t });
+            const user = await User.findByPk(userId, { transaction: t });
 
-        if (name && author) {
-            whereClause = {
-                [Op.and]: [
-                    { name },
-                    { author }
-                ]
-            };
-        } else if (name) {
-            whereClause = {
-                name: { [Op.like]: `%${name}%` }
+            if (!book) {
+                throw new Error(`Book with ID ${bookId} not found.`);
             }
-        } else if (author) {
-            whereClause = {
-                author: { [Op.like]: `%${author}%` }
+            if (!user) {
+                throw new Error(`User with ID ${userId} not found.`);
             }
-        }
 
-        return await Book.findAll({
-            where: whereClause
+            await BookUser.create({ BookId: bookId, UserId: userId }, { transaction: t });
         })
+        return { message: 'Пользователь взял определенную книгу' };
+    }
+
+    async deleteBU(bookId, userId) {
+        await sequelize.transaction(async (t) => {
+            const book = await Book.findByPk(bookId, { transaction: t });
+            const user = await User.findByPk(userId, { transaction: t });
+
+            if (!book) {
+                throw new Error(`Book with ID ${bookId} not found.`);
+            }
+            if (!user) {
+                throw new Error(`User with ID ${userId} not found.`);
+            }
+
+            const check = await  BookUser.findOne({
+                where: {
+                    BookId: bookId,
+                    UserId: userId
+                },
+                transaction: t
+            });
+
+            if(!check){
+                throw new Error(`Пользователь под ID ${userId} не брал книгу под ID ${bookId}`);
+            }
+            
+            await check.destroy({transaction: t});
+        })
+        return { message: 'Книга успешно возвращена пользователем' }
     }
 }
 

@@ -17,31 +17,7 @@ const validate = require('../helpers/validation');
  *         description: Bad Request
  */
 
-/**
- * @swagger
- * /app/general/search:
- *   get:
- *     summary: Поиск
- *     description: Производит поиск по query-параметрам. Query-параметры указывать не обязательно.
- *     tags:
- *       - General
- *     parameters:
- *         - in: query
- *           name: name
- *           schema:
- *              type: string
- *         - in: query
- *           name: author
- *           schema:
- *              type: string
- *     responses:
- *       200:
- *         description: Ok
- *       400:
- *         description: Bad Request
- *       500:
- *          description: Internal Server Error
- */
+router.get('/quantity', generalController.quantity);
 
 /**
  * @swagger
@@ -69,8 +45,62 @@ const validate = require('../helpers/validation');
  *          description: Internal Server Error
  */
 
-router.get('/quantity', generalController.quantity);
-router.get('/search',validate.validAuthorAndName(), generalController.search);
 router.get('/', validate.validPageAndLimit(), generalController.page);
+
+/**
+ * @swagger
+* /app/general/books/{bookId}/users/{userId}:
+ *   post:
+ *     summary: Привязка книг
+ *     description: Добавление пользователю определенной книги.
+ *     tags:
+ *       - General
+ *     parameters:
+ *       - name: bookId
+ *         in: path
+ *         description: id from Book
+ *         required: true
+ *       - name: userId
+ *         in: path
+ *         description: id from User
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Ok
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Internal Server Error
+ */
+
+/**
+ * @swagger
+* /app/general/books/{bookId}/users/{userId}:
+ *   delete:
+ *     summary: Удаление привязки
+ *     description: Удаление пользователя с определенной книги.
+ *     tags:
+ *       - General
+ *     parameters:
+ *       - name: bookId
+ *         in: path
+ *         description: id from Book
+ *         required: true
+ *       - name: userId
+ *         in: path
+ *         description: id from User
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Ok
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Internal Server Error
+ */
+
+router.route('/books/:bookId/users/:userId')
+    .post(validate.validUserIdBookId(), generalController.createBookUserRelation)
+    .delete(validate.validUserIdBookId(), generalController.deleteBookUserRelation);
 
 module.exports = router;

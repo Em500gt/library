@@ -47,7 +47,7 @@ const validate = require('../helpers/validation');
  * /app/book:
  *    post:
  *      summary: Добавление книги
- *      description: Добавление книг в систему с привязкой к конкретному пользователю по ID (указывать вручную).
+ *      description: Добавление книг в систему.
  *      tags:
  *        - Book
  *      requestBody:
@@ -81,14 +81,39 @@ const validate = require('../helpers/validation');
  *               numberOfPage:
  *                 type: integer
  *                 example: 288
- *               user:
- *                 type: integer
- *                 example: 21 
  */
 
 router.route('/')
     .get(bookControllers.getBooks)
     .post(validate.validBook(), bookControllers.addBook);
+
+/**
+ * @swagger
+ * /app/book/search:
+ *   get:
+ *     summary: Поиск
+ *     description: Производит поиск по query-параметрам. Query-параметры указывать не обязательно.
+ *     tags:
+ *       - Book
+ *     parameters:
+ *         - in: query
+ *           name: name
+ *           schema:
+ *              type: string
+ *         - in: query
+ *           name: author
+ *           schema:
+ *              type: string
+ *     responses:
+ *       200:
+ *         description: Ok
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *          description: Internal Server Error
+ */
+
+router.get('/search', validate.validAuthorAndName(), bookControllers.search);
 
 /**
  * @swagger
@@ -165,9 +190,6 @@ router.route('/')
  *               numberOfPage:
  *                 type: integer
  *                 example: 288
- *               user:
- *                 type: integer
- *                 example: 21 
  */
 
 /**

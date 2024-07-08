@@ -1,6 +1,8 @@
 const sequelize = require('../config/db');
 const User = require('./user.model');
 const Book = require('./book.model');
+const BookUser = require('./book.user');
+const {user, book} = require('./testdata');
 
 (async () => {
     try {
@@ -11,12 +13,10 @@ const Book = require('./book.model');
     }
 })()
 
-User.hasMany(Book, {
-    foreignKey: 'user'
-})
+Book.belongsToMany(User, { through: BookUser });
+User.belongsToMany(Book, { through: BookUser });
 
-Book.belongsTo(User, {
-    foreignKey: 'user'
-})
+// User.bulkCreate(user)
+// Book.bulkCreate(book)
 
-module.exports = { User, Book };
+module.exports = { User, Book, BookUser };

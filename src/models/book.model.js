@@ -28,11 +28,6 @@ const Book = sequelize.define('Book', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-
-    user: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    }
 }, {
     timestamps: false
 })
