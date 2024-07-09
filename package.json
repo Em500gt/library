@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prod": "cross-env NODE_ENV=production nodemon ../src/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon ../src/server.js"
+    "dev": "cross-env NODE_ENV=development nodemon ../src/server.js",
+    "migration": "npx sequelize-cli db:migrate",
+    "rollback": "npx sequelize-cli db:migrate:undo:all"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,8 @@
     "sequelize": "^6.37.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }
