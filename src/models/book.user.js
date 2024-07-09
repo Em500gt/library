@@ -20,6 +20,7 @@ const BookUser = sequelize.define('BookUser', {
     }
 },
     {
+        timestamps: false,
         indexes: [
             {
                 unique: true,
