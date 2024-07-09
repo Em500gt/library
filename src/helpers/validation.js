@@ -8,7 +8,7 @@ class ValidateData {
                 .isEmail().normalizeEmail().withMessage('Email не валидный'),
             validate.body('name')
                 .notEmpty().withMessage('Имя обязательно для заполнения')
-                .isAlpha().trim().isLength({ max: 50 }).withMessage('Имя должно состоять только из букв и не превышать 50 символов')
+                .isString().trim().isLength({ max: 50 }).withMessage('Имя должно состоять только из букв и не превышать 50 символов')
         ]
     }
 
@@ -19,7 +19,7 @@ class ValidateData {
                 .isEmail().normalizeEmail().withMessage('Email не валидный'),
             validate.body('name')
                 .optional({ nullable: true })
-                .isAlpha().trim().isLength({ max: 50 }).withMessage('Имя должно состоять только из букв и не превышать 50 символов'),
+                .isString().trim().isLength({ max: 50 }).withMessage('Имя должно состоять только из букв и не превышать 50 символов'),
         ]
     }
 

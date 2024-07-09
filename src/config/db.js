@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'production') {
         {
             host: process.env.HOST_PROD,
             dialect: process.env.DIALECT_NAME,
+            port: process.env.DATABASE_PORT_PROD
         }
     );
 }
